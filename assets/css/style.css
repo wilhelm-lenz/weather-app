@@ -1,0 +1,164 @@
+@font-face {
+  font-family: "Poppins-Tn";
+  src: url(./../fonts/Poppins-Thin.ttf);
+}
+@font-face {
+  font-family: "Poppins-Lt";
+  src: url(./../fonts/Poppins-Light.ttf);
+}
+@font-face {
+  font-family: "Poppins-Rg";
+  src: url(./../fonts/Poppins-Regular.ttf);
+}
+@font-face {
+  font-family: "Poppins-Bd";
+  src: url(./../fonts/Poppins-Bold.ttf);
+}
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins-Rg";
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background-image: url(https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin: 16px;
+}
+
+header {
+  width: 100%;
+}
+header form {
+  display: flex;
+  justify-content: center;
+}
+header form .search-input {
+  grid-column: 1/3;
+  background-color: #078fe9;
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2705882353);
+  border-radius: 32px;
+  border: 2px solid rgba(255, 255, 255, 0.4549019608);
+  border-right: 2px solid rgba(255, 255, 255, 0.2901960784);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2901960784);
+  backdrop-filter: blur(8px);
+  padding: 16px 32px;
+  margin-block: 16px;
+  margin-right: 16px;
+}
+header form .search-btn {
+  color: #078fe9;
+  background-color: #fff;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 50px;
+  margin-block: 16px;
+}
+
+.section-weather-cards-wrapper .weather-card {
+  background-color: rgba(255, 255, 255, 0.062745098);
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2705882353);
+  border-radius: 32px;
+  border: 2px solid rgba(255, 255, 255, 0.1254901961);
+  border-right: 2px solid rgba(255, 255, 255, 0.062745098);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.062745098);
+  backdrop-filter: blur(8px);
+  padding: 40px;
+  margin-block: 16px;
+}
+.section-weather-cards-wrapper .weather-card .weather-card-headline {
+  font-family: "Poppins-Lt";
+  font-size: 3rem;
+  color: #fff;
+  font-weight: normal;
+  line-height: 1.2;
+}
+.section-weather-cards-wrapper .weather-card .weather-card-degree-wrapper {
+  padding: 32px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.section-weather-cards-wrapper .weather-card .weather-card-degree-wrapper .weather-card-icon {
+  width: 200px;
+  height: 200px;
+}
+.section-weather-cards-wrapper .weather-card .weather-card-degree-wrapper .weather-card-degree {
+  font-family: "Poppins-Tn";
+  font-size: 8rem;
+  color: #fff;
+  font-weight: normal;
+  line-height: 1.2;
+  display: inline;
+}
+.section-weather-cards-wrapper .weather-card .weather-card-description {
+  color: #fff;
+  text-align: center;
+}
+.section-weather-cards-wrapper .weather-card .weather-card-current-timestamp {
+  color: #fff;
+  text-align: center;
+  margin-bottom: 16px;
+}
+.section-weather-cards-wrapper .weather-card .weather-card-add-data-wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 2px;
+}
+.section-weather-cards-wrapper .weather-card .weather-card-add-data-wrapper .weather-card-add-data-prop {
+  color: #fff;
+  padding: 4px 8px;
+  grid-column: 1/2;
+  background-color: rgba(0, 0, 0, 0.2509803922);
+}
+.section-weather-cards-wrapper .weather-card .weather-card-add-data-wrapper .weather-card-add-data-value {
+  padding: 4px 8px;
+  color: #fff;
+  grid-column: 2/4;
+  background-color: rgba(0, 0, 0, 0.1254901961);
+}
+
+.section-forecast {
+  background-color: rgba(255, 255, 255, 0.062745098);
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2705882353);
+  border-radius: 32px;
+  border: 2px solid rgba(255, 255, 255, 0.1254901961);
+  border-right: 2px solid rgba(255, 255, 255, 0.062745098);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.062745098);
+  backdrop-filter: blur(8px);
+  padding: 40px;
+  margin-block: 16px;
+}
+.section-forecast .forecast-headline {
+  color: #fff;
+}
+.section-forecast .daily-forecast-wrapper {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+  text-align: center;
+}
+.section-forecast .daily-forecast-wrapper .daily-forecast {
+  background-color: #078fe9;
+  border-radius: 8px;
+  padding: 8px;
+}
+.section-forecast .daily-forecast-wrapper .daily-forecast .weekday-forecast {
+  font-size: 0.75rem;
+}
+.section-forecast .daily-forecast-wrapper .daily-forecast .forecast-icon {
+  font-size: 2rem;
+}
+.section-forecast .daily-forecast-wrapper .daily-forecast .forecast-degree {
+  font-size: 1rem;
+}
+
+/*# sourceMappingURL=style.css.map */
