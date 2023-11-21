@@ -8,43 +8,61 @@ const weatherCardsSectionElement = document.querySelector(
   ".section-weather-cards-wrapper"
 );
 
-let currentWeather = {};
-let currentWeatherOfUserLocation = {};
+let currentWeatherData = {};
 let cityName = "";
 let countryCode = "";
 
 const getCoordinatesOfUserLocation = () => {
-  if ("geolocation" in navigator) {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        console.log(position);
-        // Success callback
-        let coordinates = {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          langCode: navigator.languages[1],
-        };
-        fetchWeatherDataOfUserLocation(
-          coordinates.latitude,
-          coordinates.longitude
-        );
-      },
-      (error) => {
-        // Error callback
-        if (error.code === 1) {
-          console.log(error.code);
-          console.log("Zugriff auf den Standort wurde vom Benutzer abgelehnt.");
-        } else {
+  return new Promise((resolve, reject) => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          let coordinates = {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          };
+          fetchWeatherDataOfUserLocation(
+            coordinates.latitude,
+            coordinates.longitude
+          ).then(() => resolve());
+        },
+        (error) => {
           console.error("Fehler bei der Standortabfrage:", error);
+          reject(error);
         }
-      }
-    );
-  } else {
-    console.log("Geolocation wird von diesem Browser nicht unterstützt.");
-  }
+      );
+    } else {
+      console.log("Geolocation wird von diesem Browser nicht unterstützt.");
+      reject(new Error("Geolocation nicht unterstützt"));
+    }
+  });
 };
 
-// const coords = getCoordinatesOfUserLocation();
+const fetchWeatherDataOfUserLocation = (latitudeParam, longitudeParam) => {
+  return new Promise((resolve, reject) => {
+    const latitude = latitudeParam;
+    const longitude = longitudeParam;
+    fetch(
+      `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`
+    )
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("Hier ist was schief gelaufen");
+        }
+      })
+      .then((userLocationObj) => {
+        currentWeatherData = { ...userLocationObj };
+        createWeatherCard(currentWeatherData);
+        resolve(); // Resolve the promise after successful data fetch
+      })
+      .catch((error) => {
+        console.log(error);
+        reject(error); // Reject the promise in case of an error
+      });
+  });
+};
 
 const fetchWeatherData = (cityNameParam, langParam) => {
   cityName = cityNameParam;
@@ -59,40 +77,15 @@ const fetchWeatherData = (cityNameParam, langParam) => {
         throw new Error("Hier ist was schief gelaufen");
       }
     })
-    .then((data) => {
-      currentWeather = data;
-      updateWeatherData();
+    .then((fixedLocationData) => {
+      currentWeatherData = { ...fixedLocationData };
+      createWeatherCard(currentWeatherData);
     })
     .catch((error) => console.log(error));
 };
 
-const fetchWeatherDataOfUserLocation = (latitudeParam, longitudeParam) => {
-  const latitude = latitudeParam;
-  const longitude = longitudeParam;
-  fetch(
-    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`
-  )
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error("Hier ist was schief gelaufen");
-      }
-    })
-    .then((userLocation) => {
-      currentWeather = userLocation;
-      updateWeatherData();
-      console.log(userLocation);
-    })
-    .catch((error) => console.log(error));
-};
-
-const updateWeatherData = () => {
-  createWeatherCard(currentWeather);
-};
-
-const createWeatherCard = (currentWeatherParam) => {
-  const currentWeather = currentWeatherParam;
+const createWeatherCard = (currentWeatherDataParam) => {
+  const currentWeatherData = currentWeatherDataParam;
 
   // create needed HTML Elements
   const weatherCardArticleElement = document.createElement("article");
@@ -193,7 +186,7 @@ const createWeatherCard = (currentWeatherParam) => {
   // set Attributes to HTML Elements
   weatherCardIconImgElement.setAttribute(
     "src",
-    `https://openweathermap.org/img/wn/${currentWeather.weather[0].icon}@2x.png`
+    `https://openweathermap.org/img/wn/${currentWeatherData.weather[0].icon}@2x.png`
   );
   weatherCardIconImgElement.setAttribute("alt", "");
   weatherCardTimestampAnchorElement.setAttribute("href", "#");
@@ -206,24 +199,24 @@ const createWeatherCard = (currentWeatherParam) => {
   const currentDay = date.getDate();
   const currentMonthName = date.toLocaleString("default", { month: "short" });
   const currentFullYear = date.getFullYear();
-  const sunriseTime = new Date(currentWeather.sys.sunrise * 1000);
+  const sunriseTime = new Date(currentWeatherData.sys.sunrise * 1000);
   const sunriseHours = sunriseTime.getUTCHours();
   const sunriseMinutes = sunriseTime.getUTCMinutes();
-  const sunsetTime = new Date(currentWeather.sys.sunset * 1000);
+  const sunsetTime = new Date(currentWeatherData.sys.sunset * 1000);
   const sunsetHours = sunsetTime.getUTCHours();
   const sunsetMinutes = sunsetTime.getUTCMinutes();
 
   // get wind Informations
-  const windDirection = getWindDirection(currentWeather.wind.deg);
-  const windDescription = getWindDescription(currentWeather.wind.speed);
+  const windDirection = getWindDirection(currentWeatherData.wind.deg);
+  const windDescription = getWindDescription(currentWeatherData.wind.speed);
 
   // Set content to HTML Elements
-  weatherCardHeadlineH2Element.textContent = `Weather in ${currentWeather.name}, ${currentWeather.sys.country}`;
+  weatherCardHeadlineH2Element.textContent = `Weather in ${currentWeatherData.name}, ${currentWeatherData.sys.country}`;
   weatherCardDegreeH3Element.textContent = `${(
-    currentWeather.main.temp - 273.15
+    currentWeatherData.main.temp - 273.15
   ).toFixed(1)} °C`;
   weatherCardDescriptionParagraphElement.textContent =
-    currentWeather.weather[0].description;
+    currentWeatherData.weather[0].description;
   weatherCardTimestampParagraphElement.textContent = `Optained at ${
     currentHour < 10 ? "0" + currentHour : currentHour
   }:${
@@ -236,19 +229,19 @@ const createWeatherCard = (currentWeatherParam) => {
     currentUTCHour < 10 ? "0" + currentUTCHour : currentUTCHour
   }:${currentMinutes}, ${currentDay} ${currentMonthName} ${currentFullYear} `;
   weatherCardAdditionalDataPropElement2.textContent = "Wind";
-  weatherCardAdditionalDataValueElement2.textContent = `${windDescription} ${currentWeather.wind.speed} m/s ${windDirection} ( ${currentWeather.wind.deg} )`;
+  weatherCardAdditionalDataValueElement2.textContent = `${windDescription} ${currentWeatherData.wind.speed} m/s ${windDirection} ( ${currentWeatherData.wind.deg} )`;
   weatherCardAdditionalDataPropElement3.textContent = "Cloudiness";
-  weatherCardAdditionalDataValueElement3.textContent = `${currentWeather.weather[0].description}`;
+  weatherCardAdditionalDataValueElement3.textContent = `${currentWeatherData.weather[0].description}`;
   weatherCardAdditionalDataPropElement4.textContent = "Pressure";
-  weatherCardAdditionalDataValueElement4.textContent = `${currentWeather.main.pressure} hPa`;
+  weatherCardAdditionalDataValueElement4.textContent = `${currentWeatherData.main.pressure} hPa`;
   weatherCardAdditionalDataPropElement5.textContent = "Humidity";
-  weatherCardAdditionalDataValueElement5.textContent = `${currentWeather.main.humidity} %`;
+  weatherCardAdditionalDataValueElement5.textContent = `${currentWeatherData.main.humidity} %`;
   weatherCardAdditionalDataPropElement6.textContent = "Sunrise";
   weatherCardAdditionalDataValueElement6.textContent = `${sunriseHours}:${sunriseMinutes}`;
   weatherCardAdditionalDataPropElement7.textContent = "Sunset";
   weatherCardAdditionalDataValueElement7.textContent = `${sunsetHours}:${sunsetMinutes}`;
   weatherCardAdditionalDataPropElement8.textContent = "Geo coords";
-  weatherCardAdditionalDataValueElement8.textContent = `[${currentWeather.coord.lon}, ${currentWeather.coord.lat}]`;
+  weatherCardAdditionalDataValueElement8.textContent = `[${currentWeatherData.coord.lon}, ${currentWeatherData.coord.lat}]`;
 
   // Append HTML Elements to Body
   weatherCardsSectionElement.append(weatherCardArticleElement);
@@ -289,6 +282,7 @@ const createWeatherCard = (currentWeatherParam) => {
   );
 };
 
+// Wind direction with with non-official degree units -> But it's a convention in meteorology and navigation
 const getWindDirection = (windDegree) => {
   if (
     (windDegree >= 348.75 && windDegree <= 360) ||
@@ -328,6 +322,7 @@ const getWindDirection = (windDegree) => {
   }
 };
 
+// Beaufort scale with wind speeds in meters per second (m/s) and its description '
 const getWindDescription = (windSpeed) => {
   if (windSpeed <= 0) {
     return "Calm";
@@ -358,14 +353,17 @@ const getWindDescription = (windSpeed) => {
   }
 };
 
-for (let i = 0; i < 5; i++) {
-  if (i === 0) {
-    getCoordinatesOfUserLocation();
-  } else {
+const loadWeatherData = async () => {
+  try {
+    await getCoordinatesOfUserLocation(); // Waiting for the location data
+
     fetchWeatherData("Hamburg", "de");
     fetchWeatherData("New York", "us");
     fetchWeatherData("Berlin", "de");
     fetchWeatherData("London", "gb");
-    fetchWeatherData("Amsterdam", "nl");
+  } catch (error) {
+    console.error("Fehler beim Laden der Wetterdaten: ", error);
   }
-}
+};
+
+loadWeatherData();
