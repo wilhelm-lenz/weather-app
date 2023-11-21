@@ -86,11 +86,17 @@ header form .search-btn {
   justify-content: center;
   align-items: center;
 }
-.section-weather-cards-wrapper .weather-card .weather-card-degree-wrapper .weather-card-icon {
+.section-weather-cards-wrapper
+  .weather-card
+  .weather-card-degree-wrapper
+  .weather-card-icon {
   width: 200px;
   height: 200px;
 }
-.section-weather-cards-wrapper .weather-card .weather-card-degree-wrapper .weather-card-degree {
+.section-weather-cards-wrapper
+  .weather-card
+  .weather-card-degree-wrapper
+  .weather-card-degree {
   font-family: "Poppins-Tn";
   font-size: 8rem;
   color: #fff;
@@ -112,13 +118,19 @@ header form .search-btn {
   grid-template-columns: repeat(3, 1fr);
   row-gap: 2px;
 }
-.section-weather-cards-wrapper .weather-card .weather-card-add-data-wrapper .weather-card-add-data-prop {
+.section-weather-cards-wrapper
+  .weather-card
+  .weather-card-add-data-wrapper
+  .weather-card-add-data-prop {
   color: #fff;
   padding: 4px 8px;
   grid-column: 1/2;
   background-color: rgba(0, 0, 0, 0.2509803922);
 }
-.section-weather-cards-wrapper .weather-card .weather-card-add-data-wrapper .weather-card-add-data-value {
+.section-weather-cards-wrapper
+  .weather-card
+  .weather-card-add-data-wrapper
+  .weather-card-add-data-value {
   padding: 4px 8px;
   color: #fff;
   grid-column: 2/4;
