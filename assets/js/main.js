@@ -2,15 +2,49 @@
 //     Fetch current weather
 // ==============================
 
-const apiKey = "";
+const apiKey = "6e1aed96f2f25e9492558352453387af";
 
 const weatherCardsSectionElement = document.querySelector(
   ".section-weather-cards-wrapper"
 );
 
 let currentWeather = {};
+let currentWeatherOfUserLocation = {};
 let cityName = "";
 let countryCode = "";
+
+const getCoordinatesOfUserLocation = () => {
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        console.log(position);
+        // Success callback
+        let coordinates = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          langCode: navigator.languages[1],
+        };
+        fetchWeatherDataOfUserLocation(
+          coordinates.latitude,
+          coordinates.longitude
+        );
+      },
+      (error) => {
+        // Error callback
+        if (error.code === 1) {
+          console.log(error.code);
+          console.log("Zugriff auf den Standort wurde vom Benutzer abgelehnt.");
+        } else {
+          console.error("Fehler bei der Standortabfrage:", error);
+        }
+      }
+    );
+  } else {
+    console.log("Geolocation wird von diesem Browser nicht unterstützt.");
+  }
+};
+
+// const coords = getCoordinatesOfUserLocation();
 
 const fetchWeatherData = (cityNameParam, langParam) => {
   cityName = cityNameParam;
@@ -26,8 +60,29 @@ const fetchWeatherData = (cityNameParam, langParam) => {
       }
     })
     .then((data) => {
-      currentWeather = { ...data };
+      currentWeather = data;
       updateWeatherData();
+    })
+    .catch((error) => console.log(error));
+};
+
+const fetchWeatherDataOfUserLocation = (latitudeParam, longitudeParam) => {
+  const latitude = latitudeParam;
+  const longitude = longitudeParam;
+  fetch(
+    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`
+  )
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error("Hier ist was schief gelaufen");
+      }
+    })
+    .then((userLocation) => {
+      currentWeather = userLocation;
+      updateWeatherData();
+      console.log(userLocation);
     })
     .catch((error) => console.log(error));
 };
@@ -303,8 +358,14 @@ const getWindDescription = (windSpeed) => {
   }
 };
 
-fetchWeatherData("Hamburg", "de");
-fetchWeatherData("New York", "us");
-fetchWeatherData("Berlin", "de");
-fetchWeatherData("London", "gb");
-fetchWeatherData("Amsterdam", "nl");
+for (let i = 0; i < 5; i++) {
+  if (i === 0) {
+    getCoordinatesOfUserLocation();
+  } else {
+    fetchWeatherData("Hamburg", "de");
+    fetchWeatherData("New York", "us");
+    fetchWeatherData("Berlin", "de");
+    fetchWeatherData("London", "gb");
+    fetchWeatherData("Amsterdam", "nl");
+  }
+}
