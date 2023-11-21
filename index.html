@@ -1,62 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Weather App</title>
-  <link rel="stylesheet" href="./assets/css/style.css">
-</head>
-
-<body>
-
-  <header>
-    <form>
-      <input type="search" name="search-input" id="search-input" class="search-input">
-      <input type="submit" value="Search" class="search-btn">
-    </form>
-  </header>
-  <main>
-    <section class="section-weather-cards-wrapper">
-      <article class="weather-card">
-        <h2 class="weather-card-headline">Weather</h2>
-        <div class="weather-card-degree-wrapper">
-          <img src="" alt="" class="weather-card-icon">
-          <h3 class="weather-card-degree">9°</h3>
+  <body>
+    <header>
+      <form>
+        <input
+          type="search"
+          name="search-input"
+          id="search-input"
+          class="search-input"
+        />
+        <input type="submit" value="Search" class="search-btn" />
+      </form>
+    </header>
+    <main>
+      <section class="section-weather-cards-wrapper">
+        <article class="weather-card">
+          <h2 class="weather-card-headline">Weather in Hamburg</h2>
+          <div class="weather-card-degree-wrapper">
+            <img
+              src="./assets/images/icons/animated/rainy-1.svg"
+              alt=""
+              class="weather-card-icon"
+            />
+            <h3 class="weather-card-degree">9°</h3>
+          </div>
+          <p class="weather-card-description">broken clouds</p>
+          <p class="weather-card-current-timestamp">broken clouds</p>
+          <div class="weather-card-add-data-wrapper">
+            <p class="weather-card-add-data-prop">prop</p>
+            <p class="weather-card-add-data-value">value</p>
+            <p class="weather-card-add-data-prop">prop</p>
+            <p class="weather-card-add-data-value">value</p>
+            <p class="weather-card-add-data-prop">prop</p>
+            <p class="weather-card-add-data-value">value</p>
+            <p class="weather-card-add-data-prop">prop</p>
+            <p class="weather-card-add-data-value">value</p>
+            <p class="weather-card-add-data-prop">prop</p>
+            <p class="weather-card-add-data-value">value</p>
+            <p class="weather-card-add-data-prop">prop</p>
+            <p class="weather-card-add-data-value">value</p>
+            <p class="weather-card-add-data-prop">prop</p>
+            <p class="weather-card-add-data-value">value</p>
+            <p class="weather-card-add-data-prop">prop</p>
+            <p class="weather-card-add-data-value"><a href="">value</a></p>
+          </div>
+        </article>
+      </section>
+      <section class="section-forecast">
+        <h3 class="forecast-headline">Wettervorschau</h3>
+        <div class="daily-forecast-wrapper">
+          <article class="daily-forecast">
+            <p class="weekday-forecast">Monday</p>
+            <p class="forecast-icon">⛅</p>
+            <p class="forecast-degree">9°</p>
+          </article>
+          <article class="daily-forecast">
+            <p class="weekday-forecast">Monday</p>
+            <p class="forecast-icon">⛅</p>
+            <p class="forecast-degree">9°</p>
+          </article>
+          <article class="daily-forecast">
+            <p class="weekday-forecast">Monday</p>
+            <p class="forecast-icon">⛅</p>
+            <p class="forecast-degree">9°</p>
+          </article>
+          <article class="daily-forecast">
+            <p class="weekday-forecast">Monday</p>
+            <p class="forecast-icon">⛅</p>
+            <p class="forecast-degree">9°</p>
+          </article>
+          <article class="daily-forecast">
+            <p class="weekday-forecast">Monday</p>
+            <p class="forecast-icon">⛅</p>
+            <p class="forecast-degree">9°</p>
+          </article>
         </div>
-        <p class="weather-card-description">broken clouds</p>
-        <p class="weather-card-current-timestamp">broken clouds</p>
-        <div class="weather-card-add-data-wrapper">
-          <p class="weather-card-add-data-prop">prop</p>
-          <p class="weather-card-add-data-value">value</p>
-          <p class="weather-card-add-data-prop">prop</p>
-          <p class="weather-card-add-data-value">value</p>
-          <p class="weather-card-add-data-prop">prop</p>
-          <p class="weather-card-add-data-value">value</p>
-          <p class="weather-card-add-data-prop">prop</p>
-          <p class="weather-card-add-data-value">value</p>
-          <p class="weather-card-add-data-prop">prop</p>
-          <p class="weather-card-add-data-value">value</p>
-          <p class="weather-card-add-data-prop">prop</p>
-          <p class="weather-card-add-data-value">value</p>
-          <p class="weather-card-add-data-prop">prop</p>
-          <p class="weather-card-add-data-value">value</p>
-          <p class="weather-card-add-data-prop">prop</p>
-          <p class="weather-card-add-data-value"><a href="">value</a></p>
-        </div>
-      </article>
-    </section>
-    <section class="section-forecast">
-      <h3 class="forecast-headline">Wettervorschau</h3>
-      <article class="daily-forecast">
-        <p class="weekday-forecast">Mo</p>
-        <p class="forecast-icon">⛅</p>
-        <p class="forecast-degree">9°</p>
-      </article>
-    </section>
-  </main>
+      </section>
+    </main>
 
-  <script src="./assets/js/main.js"></script>
-</body>
-
+    <script src="./assets/js/main.js"></script>
+  </body>
 </html>
