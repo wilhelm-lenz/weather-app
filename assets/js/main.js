@@ -394,5 +394,4 @@ const searchCity = (currentWeatherParam) => {
     fetchWeatherData(searchInput.value);
   });
 };
-
 searchCity();
