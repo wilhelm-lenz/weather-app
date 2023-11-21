@@ -54,8 +54,10 @@ const fetchWeatherData = (cityNameParam, langParam) => {
   )
     .then((response) => {
       if (response.ok) {
+        searchErrorOutput.textContent = "";
         return response.json();
       } else {
+        searchErrorOutput.textContent = "Please insert a valid city.";
         throw new Error("Hier ist was schief gelaufen");
       }
     })
@@ -89,6 +91,7 @@ const fetchWeatherDataOfUserLocation = (latitudeParam, longitudeParam) => {
 
 const updateWeatherData = () => {
   createWeatherCard(currentWeather);
+  searchCity(currentWeather);
 };
 
 const createWeatherCard = (currentWeatherParam) => {
@@ -362,10 +365,34 @@ for (let i = 0; i < 5; i++) {
   if (i === 0) {
     getCoordinatesOfUserLocation();
   } else {
-    fetchWeatherData("Hamburg", "de");
-    fetchWeatherData("New York", "us");
-    fetchWeatherData("Berlin", "de");
-    fetchWeatherData("London", "gb");
-    fetchWeatherData("Amsterdam", "nl");
+    // fetchWeatherData("Hamburg", "de");
+    // fetchWeatherData("New York", "us");
+    // fetchWeatherData("Berlin", "de");
+    // fetchWeatherData("London", "gb");
+    // fetchWeatherData("Amsterdam", "nl");
   }
 }
+
+// search function
+
+const searchInput = document.body.querySelector("#search-input");
+const searchErrorOutput = document.body.querySelector(".search-error-output");
+
+// const cityNameApi = currentWeather.name.value.toLowerCase().trim();
+
+const searchCity = (currentWeatherParam) => {
+  const searchInputCity = searchInput.value.toLowerCase().trim();
+  const searchSubmitBtn = document.body.querySelector(".search-btn");
+  searchSubmitBtn.addEventListener("click", () => {
+    event.preventDefault();
+    console.log(currentWeatherParam);
+
+    weatherCardsSectionElement.innerHTML = "";
+    console.log("Du suchst nach: " + searchInput.value);
+    const currentWeatherCity = currentWeatherParam;
+    console.log(currentWeatherCity);
+    fetchWeatherData(searchInput.value);
+  });
+};
+
+searchCity();

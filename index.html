@@ -1,34 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Weather App</title>
-  <link rel="stylesheet" href="./assets/css/style.css">
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
 
-<body>
+  <body>
+    <header>
+      <form>
+        <input
+          type="search"
+          name="search-input"
+          id="search-input"
+          class="search-input"
+        />
+        <input type="submit" value="Search" class="search-btn" />
+      </form>
+      <p class="search-error-output"></p>
+    </header>
+    <main>
+      <section class="section-weather-cards-wrapper"></section>
+      <section class="section-forecast">
+        <h3 class="forecast-headline">Wettervorschau</h3>
+        <article class="daily-forecast">
+          <p class="weekday-forecast">Mo</p>
+          <p class="forecast-icon">⛅</p>
+          <p class="forecast-degree">9°</p>
+        </article>
+      </section>
+    </main>
 
-  <header>
-    <form>
-      <input type="search" name="search-input" id="search-input" class="search-input">
-      <input type="submit" value="Search" class="search-btn">
-    </form>
-  </header>
-  <main>
-    <section class="section-weather-cards-wrapper">
-    </section>
-    <section class="section-forecast">
-      <h3 class="forecast-headline">Wettervorschau</h3>
-      <article class="daily-forecast">
-        <p class="weekday-forecast">Mo</p>
-        <p class="forecast-icon">⛅</p>
-        <p class="forecast-degree">9°</p>
-      </article>
-    </section>
-  </main>
-
-  <script src="./assets/js/main.js"></script>
-</body>
-
+    <script src="./assets/js/main.js"></script>
+  </body>
 </html>
