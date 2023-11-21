@@ -63,6 +63,7 @@ header {
     // grid-template-columns: repeat(3, 1fr);
     // width: 500px;
     .search-input {
+      width: 400px;
       grid-column: 1/3;
       background-color: #078fe9;
       box-shadow: 0 25px 45px #00000045;
@@ -83,6 +84,10 @@ header {
       border-radius: 50px;
       margin-block: 16px;
     }
+  }
+  .search-error-output {
+    color: tomato;
+    text-align: center;
   }
 }
 
@@ -112,18 +117,23 @@ header {
     }
 
     .weather-card-degree-wrapper {
-      padding: 32px 0;
+      padding: 64px 0;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
+      gap: 16px;
+
       .weather-card-icon {
-        width: 200px;
-        height: 200px;
+        width: 140px;
+        height: 140px;
+        background-color: #ffffff53;
+        border-radius: 100px;
       }
 
       .weather-card-degree {
         font-family: "Poppins-Tn";
-        font-size: 8rem;
+        font-size: 10rem;
         color: #fff;
         font-weight: normal;
         line-height: 1.2;
@@ -132,6 +142,7 @@ header {
     }
     .weather-card-description {
       color: #fff;
+      font-size: 2rem;
       text-align: center;
     }
     .weather-card-current-timestamp {
@@ -141,17 +152,21 @@ header {
     }
 
     .weather-card-add-data-wrapper {
+      margin-top: 32px;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      row-gap: 2px;
+      // row-gap: 2px;
 
       .weather-card-add-data-prop {
         color: #fff;
-        padding: 4px 8px;
+        font-family: "Poppins-Bd";
+        padding: 6px 8px;
         grid-column: 1/2;
+        // border-radius: 4px;
         background-color: #00000040;
       }
       .weather-card-add-data-value {
+        // border-radius: 4px;
         padding: 4px 8px;
         color: #fff;
         grid-column: 2/4;
@@ -178,29 +193,22 @@ header {
 
   .forecast-headline {
     color: #fff;
+    display: block;
   }
 
-  .daily-forecast-wrapper {
-    margin-top: 16px;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 4px;
-    text-align: center;
+  .daily-forecast {
+    background-color: #078fe9;
+    border-radius: 8px;
+    padding: 8px;
 
-    .daily-forecast {
-      background-color: #078fe9;
-      border-radius: 8px;
-      padding: 8px;
-
-      .weekday-forecast {
-        font-size: 0.75rem;
-      }
-      .forecast-icon {
-        font-size: 2rem;
-      }
-      .forecast-degree {
-        font-size: 1rem;
-      }
+    .weekday-forecast {
+      font-size: 0.75rem;
+    }
+    .forecast-icon {
+      font-size: 2rem;
+    }
+    .forecast-degree {
+      font-size: 1rem;
     }
   }
 }
